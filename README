@@ -1,0 +1,25 @@
+Simple NAT
+
+This is simple NAT storage and translate code
+
+The design uses a single hash table to store key-values pairs.
+It allows for overwriting of previously written key-values pairs.
+
+It handles the * character as follows:
+
+given entry <10.0.1.1:*,192.168.0.1:80> and then entry <10.0.1.1:20,192.168.0.1:88>, the code will output 192.168.0.1:88 for query 10.0.1.1:20 and 192.168.0.1:80 for any other query associated with 10.0.1.1.
+
+One modification to the challenge is that the IP and port of
+each pair is checked for format errors. Although this was not
+required by the challenge, it was added to make the design 
+more robust to faulty inputs.
+
+A simple test function test() is written to test some potential
+corner cases as well as several positive/correct cases.
+
+Possible Extensions: an extension would be to handle the * operator more regorously. Specifically, we can disallow the ip:port sequence given above:
+
+<10.0.1.1:*,192.168.0.1:80> 
+<10.0.1.1:20,192.168.0.1:88>
+
+as this presents a conflict in the key-value pairs.
